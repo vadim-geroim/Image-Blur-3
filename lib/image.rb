@@ -21,7 +21,7 @@ class Image
   end
 
 
-  def blur(distance = 1)
+  def blur(distance)
     @new_image = build_new_image(@original_image) 
     image_height = @new_image.length - 1
     image_width = @new_image.first.length - 1
@@ -44,21 +44,6 @@ class Image
   end
 end
 
-
-image = Image.new(
-  [
-        [1, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 1]
-      ]
-  )
-
-
-new_image = image.blur(4)
-Image.print_image(new_image)
 
 
 
