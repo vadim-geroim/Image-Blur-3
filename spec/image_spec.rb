@@ -38,14 +38,37 @@ RSpec.describe Image, type: :model do
       expected = [
         [0, 0, 0, 0],
         [0, 1, 0, 0],
-        [0, 1, 0, 0],
+        [1, 1, 1, 0],
         [1, 1, 1, 1],
-        [0, 1, 0, 0],
+        [1, 1, 1, 0],
         [0, 1, 0, 0]
       ]
 
+       image = Image.new(input)
+       expect(image.blur(2)).to eq expected
+    end
+
+    it 'should validate Manhattan distance of 3 edge transform' do
+        input = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1]
+      ]
+
+      expected = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1],
+        [0, 0, 0, 1, 1],
+        [0, 0, 1, 1, 1],
+        [0, 1, 1, 1, 1]
+      ]
+
       image = Image.new(input)
-      expect(image.blur(2)).to eq expected
+      expect(image.blur(3)).to eq expected
     end
 
     it 'should validate Manhattan distance of 3' do
@@ -54,33 +77,31 @@ RSpec.describe Image, type: :model do
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1]
-      ]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
+          ]
 
       expected = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [1, 1, 1, 1, 1, 1, 1, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 1, 1, 1, 1]
+        [0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 1, 0, 0, 0],
+        [0, 0, 1, 1, 1, 1, 1, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 0, 1, 1, 1, 1, 1, 0, 0],
+        [0, 0, 0, 1, 1, 1, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0]
       ]
 
       image = Image.new(input)
       expect(image.blur(3)).to eq expected
+      
+      #Please uncomment here if you would like to print
+      #in the console the image after transformation
+      # Image.print_image(image.new_image) 
     end
   end
 

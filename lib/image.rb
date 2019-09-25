@@ -1,9 +1,12 @@
 class Image
-  attr_accessor :new_image
-
+  attr_accessor :new_image, :image_width, :image_height, :ones, :current_ones
 
   def initialize(image)
     @original_image = image
+    @image_height = image.length - 1
+    @image_width = image.first.length - 1
+    @new_image = build_new_image(image) 
+    @ones = []
   end
 
   #This class method prints image
@@ -20,22 +23,38 @@ class Image
     end
   end
 
+ def change(row, col)
+  @new_image[row][col] = 1
+  if  row + 1 <= @image_height
+   @new_image[row + 1][col] = 1
+   @ones << [row + 1, col]
+  end
+  if  row - 1 >= 0 
+  @new_image[row - 1][col] = 1 
+  @ones << [row -1, col]
+  end  
+  if col + 1 <= @image_width
+  @new_image[row][col + 1] = 1
+  @ones << [row, col + 1]
+  end   
+  if col - 1 >= 0
+  @new_image[row][col - 1] = 1
+  @ones << [row, col -1]
+  end
+ end 
 
   def blur(distance)
-    @new_image = build_new_image(@original_image) 
-    image_height = @new_image.length - 1
-    image_width = @new_image.first.length - 1
-
     @original_image.each_with_index do |array, row|
       array.each_with_index do |element, col|
         if element == 1 
           distance.times do |number|
             number += 1
-            @new_image[row][col] = 1
-            @new_image[row + number][col] = 1 if  row + number <= image_height
-            @new_image[row - number][col] = 1 if  row - number >= 0 
-            @new_image[row][col + number] = 1 if col + number <= image_width   
-            @new_image[row][col - number] = 1 if col - number >= 0
+            change(row, col)
+            if number > 1
+              @current_ones = @ones
+              @ones = []
+              @current_ones.each { | element | change(element[0], element[1]) }
+            end  
           end
         end
       end
@@ -43,8 +62,4 @@ class Image
     @new_image 
   end
 end
-
-
-
-
 
