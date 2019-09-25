@@ -98,7 +98,7 @@ RSpec.describe Image, type: :model do
 
       image = Image.new(input)
       expect(image.blur(3)).to eq expected
-      
+
       #Please uncomment here if you would like to print
       #in the console the image after transformation
       # Image.print_image(image.new_image) 
